@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es-ES">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Baja carrera</title>
+        <style>
+            *{
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+            #contenedor{
+                width: 60%;
+                margin: auto;
+                padding-top: 1em;
+            }
+            header{
+                background-color: antiquewhite;
+            }
+            header h1{
+                color:brown;
+                font-size: 2.5em;
+                padding: 10px 0;
+            }
+            .separador{
+                height: 100px;
+                width: 100%;
+            }
+            form{
+                margin-top: 25px;
+                width: 100%;
+            }
+            form label{
+                display: block;
+                margin-bottom: 5px;
+            }
+            form input[type="text"], form input[type="number"]{
+                width: 100%;
+                font-size: 1.5em;
+            }
+            form input[type="text"]:focus, form input[type="number"]:focus{
+                background-color: beige;
+            }
+            form span{
+                margin-left: 5px;
+            }
+            form div.separador:last-child{
+                width: 100%;
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-around;
+                align-items: center;
+            }
+            form div.separador:last-child > input{
+                width: 40%;
+            }
+            span{
+                opacity: 0;
+                transition: 1s ease;
+            }
+            .validar:focus + span{
+                opacity: 1; 
+            }
+            .botones{
+                width: 60%;
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-around;
+                align-items: center;
+                position: absolute;
+                  bottom: 10%;
+            }
+            .botones > button{
+                width: 30%;
+            }
+        </style>
+        <script>
+            window.onload = inicio;
+            function inicio(){
+               escuchar();
+            }
+            function escuchar(){
+               document.getElementById("nombre").addEventListener("blur", validarNombre);
+            }
+            function validarNombre(){
+               let campo = Document.getElementById("nombre");
+               if(!campo.checkValidity()){
+                  let mensaje = "El nombre insertado no es correcto, verifique.";
+                  document.getElementById("panelInformativo").innerHTML = mensaje;
+                  document.getElementById("panelInformativo").style.display = "block";
+                  setTimeout(function (){
+                    document.getElementById("panelInformativo").style.display = "none";
+                  }, 5000);
+               }
+           }
+        </script>
+    </head>
+    <body>
+        <div id="contenedor">
+            <header>
+                <h1>Menú Academia</h1>
+                <h2>Zona Carreras: Baja de carrera</h2>
+                <hr />
+            </header>
+            <div id="formulario">
+                <form action="../../php/carrera/carreraVerCarrera.php" method="get">
+                    <div class="separador">
+                        <label for="nombre">Nombre de la carrera:</label>
+                        <input class="validar" type="text" id="nombre" name="nombre"
+                               minlength="2" maxlength="30" spellcheck="true" />
+                        <span>Nombre de la carrera, es obligatorio.</span>
+                    </div>
+                    <input type="submit" value="Ejecuar baja..." />
+                </form>
+            </div>
+            <div class="botones">
+                <button id="menuPrincipal">Volver al menú pricipal</button>
+                <button id="menuCarrera">Volver al menú de carrera</button>
+                <button id="nuevaCarrera">Nueva carrera</button>
+            </div>
+            <div id="panelInformativo"></div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,19 @@
+﻿IdAlmacen;Codigo;IdEmpleadoEncargado;Ciudad;Estado
+1; al-01; 1; Burgos; Bu
+2; al-02; 2; Burgos; Bu
+3; al-03; 3; Madrid; Ma
+4; al-04; NULL; Barcelona; Ba
+5; al-05; 5; Segovia; Se
+6; al-06; 6; Burgos; Bu
+7; al-07; NULL; Burgos; Bu
+8; al-08; 8; Barcelona; Ba
+9; al-09; 8; Barcelona; Ba
+10; al-10; 6; Burgos; Bu
+11; al-11; 5; Soria; So
+12; al-12; NULL; Madrid; Ma
+13; al-13; 7; Madrid; Ma
+14; al-14; 5; Soria; So
+15; al-15; 1; Mallorca; Ma
+16; al-16; 6; Barcelona; Ba
+17; al-17; 3; Soria; So
+18; al-18; 2; Madrid; Ma

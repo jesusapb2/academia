@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es-ES">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Menú principal</title>
+        <style>
+            *{
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+            #contenedor{
+                width: 60%;
+                margin: auto;
+                padding-top: 1em;
+            }
+            header{
+                background-color: antiquewhite;
+                position: relative;
+            }
+            header h1{
+                color:brown;
+                font-size: 2.5em;
+                padding: 10px 0;
+            }
+            .zonaMenu{
+                margin-top: 1em;
+                display: grid;
+            	grid-template-columns: repeat(2, 1fr);
+	            grid-template-rows: repeat(3, 100px);
+	            grid-gap: 1em;
+            }
+            .zonaMenu a{
+                display: block;
+                width: 100%;
+                padding: 40px 0;
+                background-color: antiquewhite;
+                text-align: center;
+                font-size: 2em;
+            }
+            #panelInformativo{
+                display: none;
+                position: absolute;
+                    top: 2px;
+                    left: 50%;
+                transform: translate(-50%);
+                background-color: aqua;
+                font-size: 1.5em;
+            }
+        </style>
+        <script>
+            window.onload = iniciar;
+            function iniciar(){
+                //programa principal
+                escuchar();
+                capturarMensaje();
+            }
+            
+            function escuchar(){
+                document.getElementById("volver").addEventListener("click", volver);
+            }
+            function capturarMensaje(){
+                //fase1 capturamos todos los campos del search de la url
+                let mensaje =  window.location.search;
+                //fase2 creamos un objeto que recoge cada campo de la url
+                let urlParams = new URLSearchParams(mensaje);
+                //Menase tiene todos los campos de la url, el nuestro: mensaje.
+                //http://localhost/pooBBDD2022/webs/carreras/menuCarreras.html?mensaje=100
+                mensaje = urlParams.get('mensaje');
+                
+                /** trabajando con los mensajes... */
+                if(mensaje == "100"){
+                    verOcultar("Carrera dado de alta");
+                }else if(mensaje == "101"){
+                    verOcultar("Carrera no dado de alta, verifique.");
+                }else if(mensaje == "200"){
+                    verOcultar("Carrera dado de baja");
+                }else if(mensaje == "201"){
+                    verOcultar("Carrera no dado de baja, verifique.");
+                }else if(mensaje == "202"){
+                    verOcultar("Carrera no dado de baja, a petición del usuario.");
+                }else if(mensaje == "300"){
+                    verOcultar("Regresa de consulta de carreras.");
+                }else if(mensaje == "400"){
+                    verOcultar("Carrera modificada con éxito.");
+                }
+            }
+            function verOcultar($mensaje){
+                document.getElementById("panelInformativo").innerHTML = $mensaje;
+                document.getElementById("panelInformativo").style.display = "block";
+                setTimeout(function(){
+                    document.getElementById("panelInformativo").style.display = "none";
+                }, 5000);
+            }    
+            function volver(){
+                window.history.go(-1);
+            }
+        </script>
+    </head>
+    <body>
+        <div id="contenedor">
+            <header>
+                <h1>Menú Academia</h1>
+                <h2>Menú Carreras</h2>
+                <hr />
+            </header>
+            <div class="zonaMenu">
+                <a href="./carreraAlta.html">Alta carrera</a>
+                <a href="./carreraBaja.html">Baja carrera</a>                
+                <a href="../../php/carrera/carreraConsulta.php">Consulta carrera</a>
+                <a href="./carreraModificar.html">Modifica carrera</a>  
+            </div>
+            <button id="volver">Volver al menú principal</button>
+            <div id="panelInformativo"></div>
+        </div>
+    </body>
+</html>

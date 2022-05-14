@@ -1,0 +1,165 @@
+create table carreras(
+	id_carrera int(4) not null primary key auto_increment,
+	nombre     varchar(30) not null,
+	periodo    int(1) not null
+);
+
+insert into carreras (nombre, periodo) values ("Informática", 3);
+insert into carreras (nombre, periodo) values ("Derecho", 4);
+
+create table alumnos(
+	id_alumno        int(4) not null primary key auto_increment,
+	nombre_alumno    varchar(30) not null,
+	apellido1_alumno varchar(30) not null,
+	apellido2_alumno varchar(30),
+	edad_alumno      int(2) not null,
+	anno_matriculacion_alumno int(4) default year(now()),
+	genero_alumno    enum("M", "F"),
+	id_carrera1      int(4) not null,
+	constraint fk_id_carrera1 foreign key (id_carrera1) references carreras(id_carrera)
+);
+
+insert into alumnos (nombre_alumno, apellido1_alumno, apellido2_alumno, edad_alumno, genero_alumno, id_carrera1) values ("Jesús", "Pérez", "García", 20, "M", 1);
+
+insert into alumnos (nombre_alumno, apellido1_alumno, apellido2_alumno, edad_alumno, genero_alumno, id_carrera1) values ("María", "Guerra", "Martinez", 19, "F", 2);
+
+insert into alumnos (nombre_alumno, apellido1_alumno, apellido2_alumno, edad_alumno, genero_alumno, id_carrera1) values ("Alicia", "Bueno", "García", 18, "F", 1);
+
+create table materias (
+	id_materia int(7) not null primary key auto_increment,
+	nombre_materia varchar(30) not null,
+	creditos_materia int(2) not null,
+	anno int(1) not null,
+	semestre int(1) not null,
+	id_carrera2 int(4) not null,
+	constraint fk_id_carrera2 foreign key (id_carrera2) references carreras(id_carrera)
+);
+
+informática
+insert into materias (nombre_materia, creditos_materia, anno, semestre, id_carrera2) values
+            ("Bases matemáticas para la", 6, 1, 1, 1), 
+		     ("Bases de la programación", 6 , 1, 1, 1),
+		     ("Electricidad y electrónica", 6 , 1, 1, 1),	
+		     ("Sostenibilidad y desarrollo", 6 , 1, 1, 1),
+		     ("Arquitectura de computadores", 6 , 1, 1, 1),
+		     ("Aplicación de las matemáticas a la informática", 6, 1, 2, 1),
+		     ("Programación orientada a ", 6, 1, 2, 1),
+		     ("Estadística y probabilidad", 6, 1, 2, 1),
+		     ("Contabilidad y finanzas de la empresa tecnológica", 6, 1, 2, 1),
+		     ("Arquitectura de computadores", 6, 1, 2, 1),
+		     ("Estructura de datos y algoritmia", 6, 2, 1, 1),
+		     ("Redes de computadores", 6, 2,  1, 1),
+		     ("Introducción a la inteligencia artificial", 6, 2, 1, 1),
+		     ("Proyectos de software", 6, 2,  1, 1),
+		     ("Diseño de interfaces", 6, 2, 1, 1),
+		     ("Paradigma de la programación", 6, 2, 2, 1),
+		     ("Implicaciones éticas  de la tecnología informática", 6, 2, 2, 1),
+		     ("Data bases", 6, 2, 2,  1),
+		     ("Sistemas operativos", 6, 2, 2, 1),
+		     ("Ingeniería del software", 6, 2, 2, 1),
+		     ("Análisis de datos ", 6, 3, 1,  1),
+		     ("Introducción a Internet of Things", 6, 3, 1, 1),
+		     ("Aplicaciones web ", 6, 3, 1, 1),
+		     ("Cloud computing services ", 6, 3, 1, 1),
+		     ("Aplicaciones móviles", 6, 3, 1, 1),
+		     ("Inteligencia de negocios sostenibles ", 6, 3, 2, 1),
+		     ("IT Security", 6, 3, 2, 1),
+		     ("Optativa", 6, 3, 2, 1),
+		     ("Trabajo Final de Grado ", 12, 3, 2, 1);
+
+insert into materias (nombre_materia, creditos_materia, anno, semestre, id_carrera1) values
+                ("Historia del derecho español",                6,   1, 1, 2), 
+                ("Teoría del derecho",                          6,   1, 1, 2),
+                ("Teoría del Estado constitucional",            6,   1, 1, 2),
+                ("Introducción al derecho procesal",            4,   1, 1, 2),
+	        ("Derecho civil I 1: Parte general y persona ", 4.5, 1, 1, 2),
+	        ("Fundamentos clásicos de la democracia y de la Administración", 6, 1, 1, 2), 
+	        ("Cultura europea en España",                   5,   1, 2, 2), 
+		("Derecho romano",                              4.5, 1, 2, 2), 
+		("Derecho constitucional I",                    4.5, 1, 2, 2), 
+		("Derecho civil I: 2. Familia",                 5,   1, 2, 2), 
+		("Derecho administrativo I",                    6,   1, 2, 2), 
+
+	        ("Economía política",                           5,   2, 1, 2), 
+		("Derecho constitucional II",                   4.5, 2, 1, 2), 
+		("Derecho civil II: 1",                         4.5, 2, 1, 2), 
+		("Derecho financero y tributario I",            4.5, 2, 1, 2), 
+		("Derecho administrativo II",                   5,   2, 1, 2), 
+
+	        ("Hacienda pública",                            5,   2, 2, 2), 
+		("Derecho eclesiástico del Estado",             4.5, 2, 2, 2), 
+		("Derecho constitucional III",                  4.5, 2, 2, 2), 
+		("Derecho civil II: 2",                         9,   2, 2, 2), 
+		("Derecho financero y tributario I",            9,   2, 2, 2), 
+
+		("Derecho civil III: Derechos reales e hipotecarios", 5,   3, 1, 2), 
+		("Instituciones de la Unión Europea",            5,   3, 1, 2), 
+		("Derecho financero y tributario II. 1: Imposición directa", 4.5,   3, 1, 2), 
+		("Derecho mercantil I: Empresario y empresa, competencia y propiedad industrial",            4.5,   3, 1, 2), 
+		("Derecho procesal I.1: General",            5,   3, 1, 2), 
+
+		("Derecho financero y tributario II. 2",     5,   3, 2, 2), 
+		("Derecho mercantil II: Sociedades",         4.5,   3, 2, 2), 
+		("Imposición indirecta y sistema tributario",5,   3, 2, 2), 
+		("Derecho procesal I. 2: Especial",          5,   3, 2, 2), 
+		("Derecho del trabajo",                      5,   3, 2, 2), 
+		("Derecho administrativo III",               5,   3, 2, 2), 
+
+		("Derecho internacional privado",            9,   4, 1, 2), 
+		("Derecho procesal II",                      6,   4, 1, 2), 
+		("Derecho civil IV: Derecho de succesiones", 4  ,   4, 1, 2), 
+		("Derecho mercantil III: Obligaciones y contratos mercatiles",   4.5,   4, 1, 2), 
+		("Derecho administrativo IV",                5,   4, 1, 2), 
+
+		("Derecho del consum",                       6,   4, 2, 2), 
+		("Filosofía del Derecho",                    5,   4, 2, 2), 
+		("Derecho de la protección social",          5,   4, 2, 2), 
+		("Trabajo fin de grado",                     6,   4, 2, 2), 
+		("Derecho civil de la Unión Europea",        5,   4, 2, 2), 
+		("Derecho mercantil IV: Títulos-valores, instrumentos de pago y crédito y", 6, 4,2, 2),
+		("Derecho concursal",                        6,   4, 2, 2);
+
+
+
+create table alu_mat(
+	id_alu_mat int(7) auto_increment primary key,
+	id_alu int(4) not null,
+	id_mat int(7) not null,
+	nota_materia float(4,2) default 0.00,
+	constraint fk_id_alu foreign key(id_alu) references alumnos(id_alumno),
+	constraint fk_id_mat foreign key(id_mat) references materias(id_materia)
+);	
+
+create table usuarios(
+	id_usuario int(4) not null primary key auto_increment, 
+	usuario varchar(20) not null unique,
+	contrasenna varchar(100) not null
+);
+
+
+
+
+
+//---------------------------------------------------------------------------------------
+"SELECT *, 
+       (SELECT CONCAT(nombre_alumno, ' ', apellido1_alumno, ' ', apellido2_alumno) 
+        FROM alumnos WHERE id_alumnos = id_alumno2) AS alumno 
+ FROM materias";
+
+//------------------------------------------------------------------------------------------
+<td>
+    <?php
+       $sql = "SELECT id_alumnos, CONCAT(nombre_alumno, ' ', apellido1_alumno, ' ', apellido2_alumno) AS nombre FROM alumnos";
+       $resultado = $conexion->query($sql);
+       echo "<input type='text' list='lista_alumnos' name='id_alumno' />";
+       echo "<datalist id='lista_alumnos'";
+       foreach($resultado as $alumno)
+    :?>
+           <option value="<?php echo $alumno['id_alumnos'] ?>">
+                  <?php echo $alumno['nombre'] ?>
+           </option> 
+    <?php
+       endforeach;
+       echo "</datalist>";
+    ?>        
+</td>

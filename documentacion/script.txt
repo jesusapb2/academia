@@ -1,0 +1,131 @@
+create database academia;
+use academia;
+CREATE TABLE carreras(
+     id_carrera int(3) not null primary key auto_increment,
+     nombre     varchar(30) not null,
+     duracion   int(1) not null
+);
+
+-- insertar tres registros uno con una sola tupla, el segundo con dos tuplas.
+	//derecho 4
+	//medicina 5 y quimica 4
+
+
+-- crear un procedimiento que:
+	-- > Visualize la descripción de la tabla Carreras.
+	-- > Que visualice todos los registros y campos de la tabla carreras.
+	-- > Que visualice todos los registros y campos de la tabla carreras ordenados por nombre de carrera.
+	delimiter //
+	create procedure mostrarCarrera()
+	begin
+		describe carreras;
+		select * from carreras;
+		select * from carreras order by nombre;	
+	end
+	//
+	delimiter ;
+-- LLAMAR AL PROCEDIMIENTO
+call mostrarCarrera; 
+
+
+CREATE TABLE alumnos(
+	id_alumno      int(5)      not null primary key auto_increment,
+	nombre_alu     varchar(30) not null,
+	apellido1_alu  varchar(30) not null,
+	apellido2_alu  varchar(30),
+	edad_alu       int(2) not null,
+	anno_alu	   int(4) default year(now()),
+	genero_alu     enum ("M", "F"), 
+	id_carrera1    int(3) not null,
+	FOREIGN KEY(id_carrera1) REFERENCES carreras(id_carrera) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+ALTER TABLE alumnos ADD foto varchar(50) UNIQUE;
+
+
+-- limit...
+-- Ej 1: Consultar todos los campos de la tabla carreras donde id_carrera sea mayor de uno, ordenado por duración de forma ascendente y que muestre los 2 primeros.
+SELECT * FROM carreras WHERE id_carrera > 1 order by duracion limit 2;
+
+-- SubConsulta...
+-- Ej 2: indica que carrera dura más:
+select * 
+	from carreras
+ 	where duracion = (select max(duracion) from carreras);
+
+-- Medias...
+-- Ej 3: indica la media de años de estudios en la acadeima
+select avg(duracion) as "Media de duración de las carreras" 
+	 from carreras;
+
+-- Ver todas las carreras que se cursen en tre 4 y 6 años
+select * 
+	from carreras
+	where duracion between 4 and 6;
+
+-- Inner join y contar...
+-- Ej 4: indica cuantos alumnos hay de cada carrera
+select c.nombre, count(a.id_alumno) as "Alumnos por carrera" 
+       from carreras 
+       as c inner join alumnos as a 
+       on c.id_carrera = a.id_carrera1; 
+
+-- Agrupar y mostrar según una condición con having
+-- Ej 5: selecciona todas las carreras que tengan más de 3 alumnos por carrera
+select c.nombre, count(a.id_carrera1) 
+	 from carreras as c
+	 inner join alumnos as a 
+	 on c.id_carrera = a.id_carrera1 
+	 group by c.nombre
+	 having count(a.id_carrera1) > 3;
+
+-- Operar matemáticamente
+-- Si cada año, el precio de cada carrera es de 5000 unidades monetarias ¿cuanto paga acada alumno por carrera?
+select concat(a.nombre_alu, " ", a.apellido1_alu, " ", a.apellido2_alu) as alumno, (c.duracion * 5000) as "Precio carrera"
+     	from alumnos as a 
+	inner join carreras as c
+	on a.id_carrera1 = c.id_carrera;
+	
+-- Crear la tabla Profesor
+CREATE TABLE profesores(
+	id_profesor int(4) auto_increment, 
+	nombre_pro  varchar(30) not null,
+	apellido1_pro varchar(30) not null,
+	apellido2_pro varchar(30) not null,
+	telefono varchar(9) not null,
+	primary key(id_profesor)
+);
+
+INSERT INTO profesor (nombre_pro, apellido1_pro, apellido2_pro, telefono) values ("Manuela", "García", "Rámila", 947111222);
+INSERT INTO profesor (nombre_pro, apellido1_pro, apellido2_pro, telefono) values ("Ramón", "García", "Serrano", 947222333);
+INSERT INTO profesor (nombre_pro, apellido1_pro, apellido2_pro, telefono) values ("Yolanda", "Mencía", "Cid", 947333444);
+
+
+
+-- Un profesor tiene más de un alumno asignado: 1 --> n
+-- Un alumno puede tener más de un profesor asignado	1 --> n
+-- Este tipo de unión, necesita una tabla auxiliar para romper el n -- n
+-- Esta tabla se allamará pro - alu
+CREATE TABLE pro_alu(
+	id_pro_alu int(5) primary key auto_increment,
+	id_alumno1 int(4) not null, 
+	id_profesor1 int(4) not null, 
+	FOREIGN KEY (id_alumno1)   REFERENCES alumnos(id_alumno), 
+	FOREIGN KEY (id_profesor1) REFERENCES profesores(id_profesor)
+);
+
+INSERT INTO pro_alu (id_alumno1, id_profesor1) VALUES (6,1);
+
+-- Indica de cada alumno que prosesor le corresponde
+select concat(a.nombre_alu, " ", a.apellido1_alu, " ", a.apellido2_alu) as Nombre, concat(p.nombre_pro, " ", p.apellido1_pro, " ", p.apellido2_pro) as Profesores
+	from alumnos as a 
+	inner join pro_alu as pa 
+		on a.id_alumno = pa.id_alumno1 
+	inner join profesores as p
+		on pa.id_profesor1 = p.id_profesor;
+
+ 	
+
+
+
+	
